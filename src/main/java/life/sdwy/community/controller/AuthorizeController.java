@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AuthorizeController {
-    // c687c83d586a33050198a054b4ba67359f784a3d
     @Autowired
     private GithubProvider githubProvider;
 
