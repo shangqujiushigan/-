@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>发布 - 大汉王朝</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/community.css">
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">大汉王朝</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">大汉王朝</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li th:if="${session.user != null}">
+                    <a href="/publish">发布</a>
+                </li>
+                <li class="dropdown" th:if="${session.user != null}" >
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}"><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">消息中心</a></li>
+                        <li><a href="#">个人资料</a></li>
+                        <li><a href="#">退出登录</a></li>
+                    </ul>
+                </li>
+                <li th:if="${session.user == null}">
+                    <a href="https://github.com/login/oauth/authorize?client_id=c03b81dfe20fca71fe90&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid center-grid" >
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>发起</h2>
+            <hr>
+            <form action="/publish" method="post">
+                <!-- text用value  textarea用text   保存用户的输入回显 -->
+                <div class="form-group">
+                    <label for="title">问题标题</label>
+                    <input type="text" class="form-control" id="title" th:value="${title}" name="title" placeholder="问题标题...">
+                </div>
+                <div class="form-group">
+                    <label for="description">问题补充</label>
+                    <textarea class="form-control" name="description" th:text="${description}" id="description" cols="30" rows="10"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tag">添加标签</label>
+                    <input type="text" class="form-control" id="tag" th:value="${tag}" name="tag" placeholder="输入标签, 逗号分隔">
+                </div>
+                <div class="container-fluid center-grid">
+                    <div class="row">
+                        <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" th:text="${error}" th:if="${error != null}"></div>
+                        <button type="submit" class="btn btn-success btn-publish">发布</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3>问题发起指南</h3>
+            汉朝（公元前202年-220年）是继秦朝之后的大一统王朝，主要分为西汉、东汉时期，被承认的皇帝计24位，享国四百零七年。
+            秦末天下大乱，刘邦在推翻秦朝后被封为汉王。公元前202年，楚汉之争获胜后称帝建立汉朝，定都长安，史称西汉；
+            汉文帝、汉景帝推行休养生息国策开创“文景之治”；汉武帝即位后开辟丝路、攘夷拓土成就“汉武盛世”；至汉宣帝时期国力达到极盛，设立“西域都护府”，史称“昭宣中兴”。
+            公元8年，王莽废西汉末帝，定都长安，史称新朝，西汉灭亡。
+            公元25年，刘秀统一天下后，仍沿用汉作为国号，定都洛阳，史称东汉。刘秀统一天下后息兵养民，史称“光武中兴”；
+            汉明帝、汉章帝沿袭轻徭薄赋，开创“明章之治”；汉和帝继位后大破北匈奴、收复西域，开创“永元之隆”，东汉国力达到极盛。
+            公元184年爆发黄巾起义，虽剿灭民乱却导致地方拥兵自重，公元191年董卓迁都长安后东汉名存实亡。公元220年曹丕篡汉，东汉灭亡，中国进入三国时期。
+            汉朝和约略同时期欧洲的罗马帝国并列为当时世界上先进的文明及强大帝国。两汉极盛时东并朝鲜、南包越南、西逾葱岭、北达戈壁，国土面积约达609万平方公里。
+            华夏族自汉朝以后逐渐被称为汉族，两汉在科技领域亦颇有成就，如蔡伦改进了造纸术，成为中国四大发明之一，张衡发明了地动仪、浑天仪等。
+        </div>
+    </div>
+</div>
+</body>
+</html>
