@@ -16,9 +16,8 @@ public class PaginationDTO {
     private Integer totalPage;
     private List<Integer> pages = new ArrayList<>();
 
-    public void setPagination(Integer totalCount, Integer page, Integer size) {
-        totalPage = totalCount % size == 0 ? totalCount / size : totalCount / size + 1;
-
+    public void setPagination(Integer totalPage, Integer page) {
+        this.totalPage = totalPage;
         this.page = page;
         // 分页
         pages.add(page);
@@ -37,8 +36,6 @@ public class PaginationDTO {
         // 是否展示第一页
         showFirstPage = !pages.contains(1);
         // 是否展示最后一页
-        showFirstPage = !pages.contains(totalPage);
-
-
+        showEndPage = !pages.contains(totalPage);
     }
 }
