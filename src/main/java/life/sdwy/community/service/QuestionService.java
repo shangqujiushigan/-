@@ -32,7 +32,7 @@ public class QuestionService {
             page = 1;
         paginationDTO.setPagination(totalPage, page);
 
-        List<Question> questionList = questionMapper.list(size*(page-1), size);
+        List<Question> questionList = questionMapper.list(size * (page - 1), size);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
 
         for (Question question : questionList) {
@@ -57,10 +57,14 @@ public class QuestionService {
             page = totalPage;
         if (page < 1)
             page = 1;
+
+        // 无发布记录
+        totalPage = totalPage == 0 ? 1 : totalPage;
+
         paginationDTO.setPagination(totalPage, page);
 
 
-        List<Question> questionList = questionMapper.listByUserId(userId,size*(page-1), size);
+        List<Question> questionList = questionMapper.listByUserId(userId, size * (page - 1), size);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
 
         for (Question question : questionList) {
@@ -73,5 +77,13 @@ public class QuestionService {
 
         paginationDTO.setQuestions(questionDTOS);
         return paginationDTO;
+    }
+
+    public QuestionDTO getById(Integer id) {
+        Question question =  questionMapper.getById(id);
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question, questionDTO);
+        questionDTO.setUser(userMapper.findById(question.getCreator()));
+        return questionDTO;
     }
 }

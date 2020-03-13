@@ -65,11 +65,11 @@
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="list-group">
-                <a href="/profile/questions" th:class="${sectionName=='questions'} ? 'active list-group-item': 'list-group-item'">
+                <a href="/profile/questions" class="list-group-item" th:classappend="${section=='questions'} ? 'active': ''">
                     我的问题
                     <span class="badge">14</span>
                 </a>
-                <a href="/profile/replies" class="list-group-item" th:classappend="${sectionName=='replies'} ? 'active': ''">
+                <a href="/profile/replies" class="list-group-item" th:classappend="${section=='replies'} ? 'active': ''">
                     最新回复
                     <span class="badge">11</span>
                 </a>
