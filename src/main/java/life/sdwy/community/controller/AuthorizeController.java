@@ -2,9 +2,9 @@ package life.sdwy.community.controller;
 
 import life.sdwy.community.dto.AccessTokenDTO;
 import life.sdwy.community.dto.GithubUser;
-import life.sdwy.community.mapper.UserMapper;
 import life.sdwy.community.model.User;
 import life.sdwy.community.provider.GithubProvider;
+import life.sdwy.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -20,8 +20,9 @@ import java.util.UUID;
 public class AuthorizeController {
     @Autowired
     private GithubProvider githubProvider;
+
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Value("${github.client.id}")
     private String clientId;
@@ -49,18 +50,27 @@ public class AuthorizeController {
             user.setToken(token);
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(githubUser.getAvatarUrl());
-            userMapper.insert(user);
+
+            userService.createOrUpdate(user);
+
             Cookie cookie = new Cookie("token", token);
-            cookie.setDomain("localhost");
-            cookie.setMaxAge(3000);
             response.addCookie(cookie);
             return "redirect:/";
         } else {
             // 失败，重新登录
             return "redirect:/";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }

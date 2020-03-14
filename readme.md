@@ -12,3 +12,7 @@
 
 ## 工具
 [Visual Paradigm](https://www.visual-paradigm.com)
+
+```bash
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+```
