@@ -29,3 +29,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### log ###
+logs/
+
+### 配置 ###
+src/main/resources/application.properties

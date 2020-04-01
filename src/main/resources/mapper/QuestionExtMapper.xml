@@ -24,4 +24,19 @@
     view_count = view_count + #{viewCount,jdbcType=INTEGER}
     where id = #{id}
   </update>
+
+  <update id="incComment" parameterType="life.sdwy.community.model.Question">
+    update question
+    set
+    COMMENT_COUNT = COMMENT_COUNT + #{commentCount,jdbcType=INTEGER}
+    where id = #{id}
+  </update>
+
+  <select id="selectRelated" parameterType="life.sdwy.community.model.Question" resultMap="BaseResultMap">
+    select *
+    from question
+    where id != #{id}
+    and tag regexp #{tag}
+  </select>
+
 </mapper>
